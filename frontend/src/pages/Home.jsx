@@ -106,10 +106,31 @@ export default function Home() {
       </div>
 
       {randomPick && (
-        <div className="random-pick">
-          <h3>Random Pick: {randomPick.title}</h3>
-          <p>Added by: {randomPick.user?.name || 'You'}</p>
-          <button onClick={() => setRandomPick(null)}>Dismiss</button>
+        <div className="random-pick-overlay" onClick={() => setRandomPick(null)}>
+          <div className="random-pick-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="random-pick-close" onClick={() => setRandomPick(null)}>&times;</button>
+            <div className="random-pick-header">Random Pick</div>
+            <div className="random-pick-content">
+              {randomPick.posterUrl && (
+                <img src={randomPick.posterUrl} alt={randomPick.title} className="random-pick-poster" />
+              )}
+              <div className="random-pick-details">
+                <h2>{randomPick.title}</h2>
+                <div className="random-pick-meta">
+                  <span className="type-badge">{randomPick.type}</span>
+                  {randomPick.year && <span className="random-pick-year">{randomPick.year}</span>}
+                  <span className="random-pick-added">Added by: {randomPick.user?.name || 'You'}</span>
+                </div>
+                {randomPick.description && (
+                  <p className="random-pick-description">{randomPick.description}</p>
+                )}
+                <div className="random-pick-actions">
+                  <button className="pick-again-btn" onClick={handleRandomPick}>Pick Again</button>
+                  <button className="dismiss-btn" onClick={() => setRandomPick(null)}>Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
