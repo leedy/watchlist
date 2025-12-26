@@ -26,6 +26,16 @@ router.post('/', auth, async (req, res) => {
   try {
     const { title, type, year, posterUrl, description, isPrivate } = req.body;
 
+    // Check for duplicate
+    const existing = await WatchlistItem.findOne({
+      user: req.userId,
+      title: { $regex: new RegExp(`^${title}$`, 'i') }
+    });
+
+    if (existing) {
+      return res.status(400).json({ error: 'This title is already in your watchlist' });
+    }
+
     const item = new WatchlistItem({
       title,
       type,

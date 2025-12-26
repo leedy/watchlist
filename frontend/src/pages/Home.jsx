@@ -42,7 +42,7 @@ export default function Home() {
       setShowAdd(false);
       loadItems();
     } catch (err) {
-      console.error('Failed to add item', err);
+      alert(err.response?.data?.error || 'Failed to add item');
     }
   };
 

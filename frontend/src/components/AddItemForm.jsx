@@ -12,6 +12,11 @@ export default function AddItemForm({ onSubmit, onCancel }) {
   const [searching, setSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const justSelected = useRef(false);
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    searchInputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     // Skip search if user just selected a result
@@ -77,6 +82,7 @@ export default function AddItemForm({ onSubmit, onCancel }) {
 
         <div className="search-container">
           <input
+            ref={searchInputRef}
             type="text"
             placeholder="Search for a movie or TV show..."
             value={title}
